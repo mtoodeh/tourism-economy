@@ -1,0 +1,1567 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/samin/Desktop/stata/section1_output.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 2 Apr 2025, 08:15:18
+{txt}
+{com}. 
+. use "stata exam.dta", clear
+{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 2. Construct dummy variable for Central and Eastern Europe (CEE)
+. * -----------------------------------------------------------------------------
+. capture drop cee
+{txt}
+{com}. capture label drop label99
+{txt}
+{com}. 
+. gen cee = country == "Albania" | ///
+>           country == "Armenia" | ///
+>           country == "Belarus" | ///
+>           country == "Bosnia and Herzegovina" | ///
+>           country == "Bulgaria" | ///
+>           country == "Croatia" | ///
+>           country == "Czechia" | ///
+>           country == "Estonia" | ///
+>           country == "Georgia" | ///
+>           country == "Hungary" | ///
+>           country == "Kosovo (under United Nations Security Council Resolution 1244/99)" | ///
+>           country == "Latvia" | ///
+>           country == "Lithuania" | ///
+>           country == "Moldova" | ///
+>           country == "Montenegro" | ///
+>           country == "North Macedonia" | ///
+>           country == "Poland" | ///
+>           country == "Romania" | ///
+>           country == "Russia" | ///
+>           country == "Serbia" | ///
+>           country == "Slovakia" | ///
+>           country == "Slovenia" | ///
+>           country == "Ukraine"
+{txt}
+{com}. 
+. label define label99 0 "Non-CEE" 1 "CEE"
+{txt}
+{com}. label values cee label99
+{txt}
+{com}. label variable cee "Central and Eastern Europe"
+{txt}
+{com}. 
+. tab cee
+
+{txt}Central and {c |}
+    Eastern {c |}
+     Europe {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+    Non-CEE {c |}{res}        462       58.93       58.93
+{txt}        CEE {c |}{res}        322       41.07      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        784      100.00
+{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 3. Description of the dataset
+. * -----------------------------------------------------------------------------
+. describe
+
+{txt}Contains data from {res}stata exam.dta
+{txt} Observations:{res}           784                  
+{txt}    Variables:{res}            34                  27 Mar 2025 18:32
+{txt}{hline}
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+{hline}
+{p 0 48}{res}{bind:country        }{txt}{bind: str65   }{bind:%65s      }{space 1}{bind:         }{bind:  }{res}{res}Country{p_end}
+{p 0 48}{bind:year           }{txt}{bind: int     }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Year{p_end}
+{p 0 48}{bind:offer          }{txt}{bind: long    }{bind:%10.0gc   }{space 1}{bind:         }{bind:  }{res}{res}Number of establishments, bedrooms and bed-places{p_end}
+{p 0 48}{bind:GDP            }{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}GDP current prices million euro{p_end}
+{p 0 48}{bind:pop            }{txt}{bind: long    }{bind:%10.0gc   }{space 1}{bind:         }{bind:  }{res}{res}Population on 1 January{p_end}
+{p 0 48}{bind:country_code   }{txt}{bind: str65   }{bind:%65s      }{space 1}{bind:         }{bind:  }{res}{res}Country Code{p_end}
+{p 0 48}{bind:airports       }{txt}{bind: int     }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Number of airports{p_end}
+{p 0 48}{bind:nights         }{txt}{bind: long    }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Nights spent at tourist accommodation establishments (number){p_end}
+{p 0 48}{bind:arrivals       }{txt}{bind: long    }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Arrivals at tourist accommodation establishments (number){p_end}
+{p 0 48}{bind:exp            }{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Expenditure in Euros (1 night or over){p_end}
+{p 0 48}{bind:exp_males      }{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Males' Expenditure in Euros (1 night or over){p_end}
+{p 0 48}{bind:exp_fe         }{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Females' Expenditure in Euros (1 night or over){p_end}
+{p 0 48}{bind:env            }{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Greenhouse gas emissions (thousand tonnes){p_end}
+{p 0 48}{bind:exp_culture    }{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Government expenditure on recreation, culture and religion (% of GDP){p_end}
+{p 0 48}{bind:homicide       }{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Rate of homicides{p_end}
+{p 0 48}{bind:rape           }{txt}{bind: double  }{bind:%10.0g    }{space 1}{bind:         }{bind:  }{res}{res}Rate of rapes{p_end}
+{p 0 48}{bind:ln_arrivals    }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Log of Tourist Arrivals{p_end}
+{p 0 48}{bind:ln_GDP         }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_pop         }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:country_id     }{txt}{bind: long    }{bind:%65.0g    }{space 1}{txt}country_id{p_end}
+{p 0 48}{space 44}{bind:  }{res}{res}Country{p_end}
+{p 0 48}{bind:_est_fe_model  }{txt}{bind: byte    }{bind:%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}esample() from estimates store{p_end}
+{p 0 48}{bind:_est_re_model  }{txt}{bind: byte    }{bind:%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}esample() from estimates store{p_end}
+{p 0 48}{bind:arrivals2      }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_offer       }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_airports    }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_exp         }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_homicide    }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_env         }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_rape        }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_exp_fe      }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_exp_male    }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_exp_culture }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:ln_exp_males   }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}{p_end}
+{p 0 48}{bind:cee            }{txt}{bind: float   }{bind:%9.0g     }{space 1}{bind:label99  }{bind:  }{res}{res}Central and Eastern Europe{p_end}
+{txt}{hline}
+Sorted by: {res}country_id  year
+{txt}     Note: {res}Dataset has changed since last saved.
+{txt}
+{com}. codebook
+
+{txt}{hline}
+{res}country{right:Country}
+{txt}{hline}
+
+{col 19}Type: String ({res}str65{txt})
+
+{col 10}Unique values: {res}56{col 51}{txt}Missing "": {res}0{txt}/{res}784
+
+{txt}{col 15}Examples: {res}"Czechia"
+{col 25}"Germany including former GDR"
+{col 25}"Malta"
+{col 25}"Russia"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}year{right:Year}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}int{txt})
+
+{col 18}Range: [{res}2006{txt},{res}2019{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}14{col 51}{txt}Missing .: {res}0{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 6:2012.5}
+{txt}{col 14}Std. dev.: {res}{ralign 6:4.0337}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 6:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 6:2007}{ralign 10:    2009}{ralign 10:  2012.5}{ralign 10:    2016}{ralign 10:    2018}
+
+{txt}{hline}
+{res}offer{right:Number of establishments, bedrooms and bed-places}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}long{txt})
+
+{col 18}Range: [{res}86{txt},{res}216141{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}285{col 51}{txt}Missing .: {res}491{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:17618.6}
+{txt}{col 14}Std. dev.: {res}{ralign 7:34740.4}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:432}{ralign 10:    1118}{ralign 10:    3357}{ralign 10:   10509}{ralign 10:   50572}
+
+{txt}{hline}
+{res}GDP{right:GDP current prices million euro}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}3125.1{txt},{res}3435760{txt}]{col 55}Units: {res}.1
+{col 10}{txt}Unique values: {res}352{col 51}{txt}Missing .: {res}432{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 6:432146}
+{txt}{col 14}Std. dev.: {res}{ralign 6:712758}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 6:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 6:9268.3}{ralign 10: 23249.8}{ralign 10:  160866}{ralign 10:  429542}{ralign 10: 1.6e+06}
+
+{txt}{hline}
+{res}pop{right:Population on 1 January}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}long{txt})
+
+{col 18}Range: [{res}31269{txt},{res}1.437e+08{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}558{col 51}{txt}Missing .: {res}213{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:1.9e+07}
+{txt}{col 14}Std. dev.: {res}{ralign 7:2.7e+07}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:576249}{ralign 10: 2.8e+06}{ralign 10: 7.3e+06}{ralign 10: 1.6e+07}{ralign 10: 6.4e+07}
+
+{txt}{hline}
+{res}country_code{right:Country Code}
+{txt}{hline}
+
+{col 19}Type: String ({res}str65{txt})
+
+{col 10}Unique values: {res}56{col 51}{txt}Missing "": {res}0{txt}/{res}784
+
+{txt}{col 15}Examples: {res}"Czechia"
+{col 25}"Germany including former GDR"
+{col 25}"Malta"
+{col 25}"Russia"
+
+{txt}{col 16}Warning: Variable has embedded blanks.
+
+{txt}{hline}
+{res}airports{right:Number of airports}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}int{txt})
+
+{col 18}Range: [{res}1{txt},{res}132{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}62{col 51}{txt}Missing .: {res}393{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:18.3836}
+{txt}{col 14}Std. dev.: {res}{ralign 7:22.3295}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:2}{ralign 10:       4}{ralign 10:       7}{ralign 10:      33}{ralign 10:      48}
+
+{txt}{hline}
+{res}nights{right:Nights spent at tourist accommodation establishments (number)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}long{txt})
+
+{col 18}Range: [{res}110465{txt},{res}3.059e+08{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}324{col 51}{txt}Missing .: {res}460{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:3.8e+07}
+{txt}{col 14}Std. dev.: {res}{ralign 7:6.1e+07}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:2.1e+06}{ralign 10: 4.1e+06}{ralign 10: 1.2e+07}{ralign 10: 4.4e+07}{ralign 10: 1.0e+08}
+
+{txt}{hline}
+{res}arrivals{right:Arrivals at tourist accommodation establishments (number)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}long{txt})
+
+{col 18}Range: [{res}56666{txt},{res}65771059{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}316{col 51}{txt}Missing .: {res}468{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:1.1e+07}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.5e+07}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:943285}{ralign 10: 1.7e+06}{ralign 10: 3.4e+06}{ralign 10: 1.1e+07}{ralign 10: 3.7e+07}
+
+{txt}{hline}
+{res}exp{right:Expenditure in Euros (1 night or over)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}1180{txt},{res}59893173{txt}]{col 55}Units: {res}.01
+{col 10}{txt}Unique values: {res}274{col 51}{txt}Missing .: {res}510{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:6.7e+06}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.3e+07}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:113648}{ralign 10:  485537}{ralign 10: 1.5e+06}{ralign 10: 5.2e+06}{ralign 10: 2.1e+07}
+
+{txt}{hline}
+{res}exp_males{right:Males' Expenditure in Euros (1 night or over)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}1080{txt},{res}29835000{txt}]{col 55}Units: {res}.01
+{col 10}{txt}Unique values: {res}244{col 51}{txt}Missing .: {res}540{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:3.7e+06}
+{txt}{col 14}Std. dev.: {res}{ralign 7:7.1e+06}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:54832}{ralign 10:  179103}{ralign 10:  699077}{ralign 10: 3.0e+06}{ralign 10: 1.2e+07}
+
+{txt}{hline}
+{res}exp_fe{right:Females' Expenditure in Euros (1 night or over)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}100{txt},{res}30787177{txt}]{col 55}Units: {res}.01
+{col 10}{txt}Unique values: {res}245{col 51}{txt}Missing .: {res}539{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:3.3e+06}
+{txt}{col 14}Std. dev.: {res}{ralign 7:6.3e+06}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:56989}{ralign 10:  177667}{ralign 10:  715953}{ralign 10: 2.4e+06}{ralign 10: 1.0e+07}
+
+{txt}{hline}
+{res}env{right:Greenhouse gas emissions (thousand tonnes)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}196.89{txt},{res}956880.54{txt}]{col 55}Units: {res}.01
+{col 10}{txt}Unique values: {res}330{col 51}{txt}Missing .: {res}454{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:142321}
+{txt}{col 14}Std. dev.: {res}{ralign 7:202242}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:9204.24}{ralign 10: 15277.6}{ralign 10: 54210.7}{ralign 10:  134195}{ralign 10:  426704}
+
+{txt}{hline}
+{p 0 39}{res}exp_culture{space 28}Government expenditure on recreation, culture and religion (% of GDP){p_end}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}.5{txt},{res}3.5{txt}]{col 55}Units: {res}.1
+{col 10}{txt}Unique values: {res}24{col 51}{txt}Missing .: {res}459{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:1.29569}
+{txt}{col 14}Std. dev.: {res}{ralign 7:.494207}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:.8}{ralign 10:      .9}{ralign 10:     1.2}{ralign 10:     1.5}{ralign 10:     1.9}
+
+{txt}{hline}
+{res}homicide{right:Rate of homicides}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}0{txt},{res}9.28{txt}]{col 55}Units: {res}.01
+{col 10}{txt}Unique values: {res}184{col 51}{txt}Missing .: {res}446{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:1.59766}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.35769}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:.61}{ralign 10:     .84}{ralign 10:    1.15}{ralign 10:    1.74}{ralign 10:    3.39}
+
+{txt}{hline}
+{res}rape{right:Rate of rapes}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}double{txt})
+
+{col 18}Range: [{res}.32{txt},{res}102.27{txt}]{col 55}Units: {res}.01
+{col 10}{txt}Unique values: {res}250{col 51}{txt}Missing .: {res}510{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:12.4754}
+{txt}{col 14}Std. dev.: {res}{ralign 7:16.6362}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:1.58}{ralign 10:    2.14}{ralign 10:   5.425}{ralign 10:   16.06}{ralign 10:   30.63}
+
+{txt}{hline}
+{res}ln_arrivals{right:Log of Tourist Arrivals}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}10.94493{txt},{res}18.00169{txt}]{col 55}Units: {res}1.000e-07
+{col 10}{txt}Unique values: {res}316{col 51}{txt}Missing .: {res}468{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:15.2289}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.48228}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:13.7571}{ralign 10: 14.3181}{ralign 10: 15.0353}{ralign 10: 16.2372}{ralign 10: 17.4347}
+
+{txt}{hline}
+{res}ln_GDP{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}8.0472212{txt},{res}15.049748{txt}]{col 55}Units: {res}1.000e-07
+{col 10}{txt}Unique values: {res}352{col 51}{txt}Missing .: {res}432{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:11.6204}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.84017}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:9.13436}{ralign 10: 10.0539}{ralign 10: 11.9883}{ralign 10: 12.9705}{ralign 10: 14.3006}
+
+{txt}{hline}
+{res}ln_pop{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}10.350383{txt},{res}18.783009{txt}]{col 55}Units: {res}1.000e-07
+{col 10}{txt}Unique values: {res}558{col 51}{txt}Missing .: {res}213{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:15.6083}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.78202}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:13.2643}{ralign 10: 14.8621}{ralign 10: 15.7967}{ralign 10:  16.618}{ralign 10: 17.9799}
+
+{txt}{hline}
+{res}country_id{right:Country}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}long{txt})
+{ralign 22:Label}: {res:country_id}
+
+{col 18}Range: [{res}1{txt},{res}56{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}56{col 51}{txt}Missing .: {res}0{txt}/{res}784
+
+{txt}{ralign 23: Examples:}{col 25}{res}12{col 31}{txt}Czechia
+{ralign 23: }{col 25}{res}23{col 31}{txt}Germany including former GDR
+{ralign 23: }{col 25}{res}34{col 31}{txt}Malta
+{ralign 23: }{col 25}{res}45{col 31}{txt}Russia
+
+{txt}{hline}
+{res}_est_fe_model{right:esample() from estimates store}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}byte{txt})
+
+{col 18}Range: [{res}0{txt},{res}1{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}2{col 51}{txt}Missing .: {res}0{txt}/{res}784
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       594{col 32}0
+{col 20}       190{col 32}1
+
+{txt}{hline}
+{res}_est_re_model{right:esample() from estimates store}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}byte{txt})
+
+{col 18}Range: [{res}0{txt},{res}1{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}2{col 51}{txt}Missing .: {res}0{txt}/{res}784
+
+{txt}{col 13}Tabulation: Freq.  Value
+{col 20}{res}       594{col 32}0
+{col 20}       190{col 32}1
+
+{txt}{hline}
+{res}arrivals2{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}3.211e+09{txt},{res}4.326e+15{txt}]{col 55}Units: {res}100
+{col 10}{txt}Unique values: {res}316{col 51}{txt}Missing .: {res}468{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:3.4e+14}
+{txt}{col 14}Std. dev.: {res}{ralign 7:8.0e+14}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:8.9e+11}{ralign 10: 2.7e+12}{ralign 10: 1.1e+13}{ralign 10: 1.3e+14}{ralign 10: 1.4e+15}
+
+{txt}{hline}
+{res}ln_offer{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}4.4543471{txt},{res}12.283687{txt}]{col 55}Units: {res}1.000e-07
+{col 10}{txt}Unique values: {res}285{col 51}{txt}Missing .: {res}491{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:8.28728}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.81783}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:6.06843}{ralign 10:  7.0193}{ralign 10:  8.1188}{ralign 10: 9.25999}{ralign 10: 10.8312}
+
+{txt}{hline}
+{res}ln_airports{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}0{txt},{res}4.882802{txt}]{col 55}Units: {res}1.000e-07
+{col 10}{txt}Unique values: {res}62{col 51}{txt}Missing .: {res}393{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:2.18576}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.26224}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:.693147}{ralign 10: 1.38629}{ralign 10: 1.94591}{ralign 10: 3.49651}{ralign 10:  3.8712}
+
+{txt}{hline}
+{res}ln_exp{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}7.0732698{txt},{res}17.908073{txt}]{col 55}Units: {res}1.000e-07
+{col 10}{txt}Unique values: {res}274{col 51}{txt}Missing .: {res}510{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:14.1513}
+{txt}{col 14}Std. dev.: {res}{ralign 7:2.01411}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:11.6409}{ralign 10:  13.093}{ralign 10: 14.1947}{ralign 10: 15.4633}{ralign 10: 16.8745}
+
+{txt}{hline}
+{res}ln_homicide{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}-1.2039728{txt},{res}2.2278616{txt}]{col 55}Units: {res}1.000e-10
+{col 10}{txt}Unique values: {res}183{col 51}{txt}Missing .: {res}454{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 8:.264701}
+{txt}{col 14}Std. dev.: {res}{ralign 8:.634614}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 8:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 8:-.430783}{ralign 10:-.150823}{ralign 10: .157004}{ralign 10: .565314}{ralign 10:  1.2223}
+
+{txt}{hline}
+{res}ln_env{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}5.2826452{txt},{res}13.771434{txt}]{col 55}Units: {res}1.000e-07
+{col 10}{txt}Unique values: {res}330{col 51}{txt}Missing .: {res}454{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:10.8189}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.69404}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:9.12741}{ralign 10: 9.63414}{ralign 10: 10.9006}{ralign 10:  11.807}{ralign 10: 12.9638}
+
+{txt}{hline}
+{res}ln_rape{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}-1.1394343{txt},{res}4.6276164{txt}]{col 55}Units: {res}1.000e-09
+{col 10}{txt}Unique values: {res}250{col 51}{txt}Missing .: {res}510{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:1.79742}
+{txt}{col 14}Std. dev.: {res}{ralign 7:1.22304}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:.457425}{ralign 10: .760806}{ralign 10: 1.69095}{ralign 10: 2.77633}{ralign 10: 3.42198}
+
+{txt}{hline}
+{res}ln_exp_fe{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}4.6051702{txt},{res}17.242609{txt}]{col 55}Units: {res}1.000e-07
+{col 10}{txt}Unique values: {res}245{col 51}{txt}Missing .: {res}539{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:13.4036}
+{txt}{col 14}Std. dev.: {res}{ralign 7:2.08447}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:10.9506}{ralign 10: 12.0877}{ralign 10: 13.4814}{ralign 10: 14.7101}{ralign 10: 16.1444}
+
+{txt}{hline}
+{res}ln_exp_male{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}6.9847164{txt},{res}17.211193{txt}]{col 55}Units: {res}1.000e-07
+{col 10}{txt}Unique values: {res}244{col 51}{txt}Missing .: {res}540{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:13.4774}
+{txt}{col 14}Std. dev.: {res}{ralign 7:2.05273}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:10.912}{ralign 10: 12.0948}{ralign 10: 13.4575}{ralign 10: 14.9107}{ralign 10: 16.3313}
+
+{txt}{hline}
+{res}ln_exp_culture{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}-.69314718{txt},{res}1.2527629{txt}]{col 55}Units: {res}1.000e-09
+{col 10}{txt}Unique values: {res}24{col 51}{txt}Missing .: {res}459{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 8:.194298}
+{txt}{col 14}Std. dev.: {res}{ralign 8:.356721}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 8:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 8:-.223144}{ralign 10:-.105361}{ralign 10: .182322}{ralign 10: .405465}{ralign 10: .641854}
+
+{txt}{hline}
+{res}ln_exp_males{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+
+{col 18}Range: [{res}6.9847164{txt},{res}17.211193{txt}]{col 55}Units: {res}1.000e-07
+{col 10}{txt}Unique values: {res}244{col 51}{txt}Missing .: {res}540{txt}/{res}784
+
+{txt}{col 19}Mean: {res}{ralign 7:13.4774}
+{txt}{col 14}Std. dev.: {res}{ralign 7:2.05273}
+
+{txt}{col 12}Percentiles: {col 25}{ralign 7:10%}{ralign 10:25%}{ralign 10:50%}{ralign 10:75%}{ralign 10:90%}
+{res}{col 25}{ralign 7:10.912}{ralign 10: 12.0948}{ralign 10: 13.4575}{ralign 10: 14.9107}{ralign 10: 16.3313}
+
+{txt}{hline}
+{res}cee{right:Central and Eastern Europe}
+{txt}{hline}
+
+{col 19}Type: Numeric ({res}float{txt})
+{ralign 22:Label}: {res:label99}
+
+{col 18}Range: [{res}0{txt},{res}1{txt}]{col 55}Units: {res}1
+{col 10}{txt}Unique values: {res}2{col 51}{txt}Missing .: {res}0{txt}/{res}784
+
+{txt}{col 13}Tabulation: Freq.   Numeric  Label
+{col 20}{res}       462{col 32}       0{col 42}{txt}Non-CEE
+{col 20}{res}       322{col 32}       1{col 42}{txt}CEE
+
+{com}. summarize
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}country {c |}{res}          0
+{txt}{space 8}year {c |}{res}        784      2012.5    4.033702       2006       2019
+{txt}{space 7}offer {c |}{res}        293    17618.59    34740.41         86     216141
+{txt}{space 9}GDP {c |}{res}        352    432146.5      712758     3125.1    3435760
+{txt}{space 9}pop {c |}{res}        571    1.85e+07    2.70e+07      31269   1.44e+08
+{txt}{hline 13}{c +}{hline 57}
+country_code {c |}{res}          0
+{txt}{space 4}airports {c |}{res}        391    18.38363    22.32949          1        132
+{txt}{space 6}nights {c |}{res}        324    3.82e+07    6.09e+07     110465   3.06e+08
+{txt}{space 4}arrivals {c |}{res}        316    1.05e+07    1.51e+07      56666   6.58e+07
+{txt}{space 9}exp {c |}{res}        274     6736565    1.28e+07       1180   5.99e+07
+{txt}{hline 13}{c +}{hline 57}
+{space 3}exp_males {c |}{res}        244     3724896     7096505       1080   2.98e+07
+{txt}{space 6}exp_fe {c |}{res}        245     3337268     6337153        100   3.08e+07
+{txt}{space 9}env {c |}{res}        330      142321      202242     196.89   956880.5
+{txt}{space 1}exp_culture {c |}{res}        325    1.295692    .4942071         .5        3.5
+{txt}{space 4}homicide {c |}{res}        338    1.597663    1.357693          0       9.28
+{txt}{hline 13}{c +}{hline 57}
+{space 8}rape {c |}{res}        274    12.47544    16.63621        .32     102.27
+{txt}{space 1}ln_arrivals {c |}{res}        316    15.22891    1.482285   10.94493   18.00169
+{txt}{space 6}ln_GDP {c |}{res}        352    11.62043    1.840175   8.047221   15.04975
+{txt}{space 6}ln_pop {c |}{res}        571    15.60828    1.782016   10.35038   18.78301
+{txt}{space 2}country_id {c |}{res}        784        28.5    16.17355          1         56
+{txt}{hline 13}{c +}{hline 57}
+_est_fe_mo~l {c |}{res}        784    .2423469    .4287766          0          1
+{txt}_est_re_mo~l {c |}{res}        784    .2423469    .4287766          0          1
+{txt}{space 3}arrivals2 {c |}{res}        316    3.37e+14    7.95e+14   3.21e+09   4.33e+15
+{txt}{space 4}ln_offer {c |}{res}        293    8.287277    1.817827   4.454347   12.28369
+{txt}{space 1}ln_airports {c |}{res}        391     2.18576     1.26224          0   4.882802
+{txt}{hline 13}{c +}{hline 57}
+{space 6}ln_exp {c |}{res}        274    14.15128    2.014112    7.07327   17.90807
+{txt}{space 1}ln_homicide {c |}{res}        330    .2647006    .6346139  -1.203973   2.227862
+{txt}{space 6}ln_env {c |}{res}        330    10.81891    1.694039   5.282645   13.77143
+{txt}{space 5}ln_rape {c |}{res}        274    1.797419    1.223041  -1.139434   4.627616
+{txt}{space 3}ln_exp_fe {c |}{res}        245    13.40355    2.084471    4.60517   17.24261
+{txt}{hline 13}{c +}{hline 57}
+{space 1}ln_exp_male {c |}{res}        244    13.47745    2.052727   6.984716   17.21119
+{txt}ln_exp_cul~e {c |}{res}        325    .1942982    .3567213  -.6931472   1.252763
+{txt}ln_exp_males {c |}{res}        244    13.47745    2.052727   6.984716   17.21119
+{txt}{space 9}cee {c |}{res}        784    .4107143    .4922775          0          1
+{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 4. Descriptive statistics the dependent variable: nights
+. * -----------------------------------------------------------------------------
+. summarize nights, detail
+
+            {txt}Nights spent at tourist accommodation
+                   establishments (number)
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}   132491         110465
+{txt} 5%    {res}  1020943         127747
+{txt}10%    {res}  2089527         130202       {txt}Obs         {res}        324
+{txt}25%    {res}  4094915         132491       {txt}Sum of wgt. {res}        324
+
+{txt}50%    {res} 1.19e+07                      {txt}Mean          {res} 3.82e+07
+                        {txt}Largest       Std. dev.     {res} 6.09e+07
+{txt}75%    {res} 4.41e+07       2.79e+08
+{txt}90%    {res} 1.03e+08       2.95e+08       {txt}Variance      {res} 3.71e+15
+{txt}95%    {res} 1.87e+08       3.01e+08       {txt}Skewness      {res} 2.462252
+{txt}99%    {res} 2.79e+08       3.06e+08       {txt}Kurtosis      {res} 8.937377
+{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 5. Plot the distribution of nights for all groups
+. * -----------------------------------------------------------------------------
+. 
+. * All countries
+. histogram nights, normal title("Nights - All Countries")
+{txt}(bin={res}18{txt}, start={res}110465{txt}, width={res}16988722{txt})
+{res}{txt}
+{com}. graph export "hist_nights_all.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/hist_nights_all.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * CEE countries only
+. histogram nights if cee == 1, normal title("Nights - CEE Countries")
+{txt}(bin={res}11{txt}, start={res}548640{txt}, width={res}7508293.9{txt})
+{res}{txt}
+{com}. graph export "hist_nights_cee.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/hist_nights_cee.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * Non-CEE countries only
+. histogram nights if cee == 0, normal title("Nights - Non-CEE Countries")
+{txt}(bin={res}13{txt}, start={res}110465{txt}, width={res}23522846{txt})
+{res}{txt}
+{com}. graph export "hist_nights_noncee.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/hist_nights_noncee.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * Log transformation of nights
+. capture drop ln_nights
+{txt}
+{com}. gen ln_nights = ln(nights)
+{txt}(460 missing values generated)
+
+{com}. label variable ln_nights "Log of Nights Spent"
+{txt}
+{com}. 
+. * Histogram of log-nights
+. histogram ln_nights, normal title("Log(Nights) - All Countries")
+{txt}(bin={res}18{txt}, start={res}11.612454{txt}, width={res}.44035217{txt})
+{res}{txt}
+{com}. graph export "hist_ln_nights_all.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/hist_ln_nights_all.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * Groups means
+. mean ln_nights, over(cee)
+{res}
+{txt}{col 1}Mean estimation{col 47}{lalign 13:Number of obs}{col 60} = {res}{ralign 3:324}
+
+{txt}{hline 16}{c TT}{hline 11}{hline 11}{hline 14}{hline 12}
+{col 17}{c |}       Mean{col 29}   Std. err.{col 41}     [95% con{col 54}f. interval]
+{hline 16}{c +}{hline 11}{hline 11}{hline 14}{hline 12}
+c.ln_nights@cee {c |}
+{space 7}Non-CEE  {c |}{col 17}{res}{space 2} 16.81254{col 29}{space 2}  .126008{col 40}{space 5} 16.56464{col 54}{space 3} 17.06044
+{txt}{space 11}CEE  {c |}{col 17}{res}{space 2} 15.63938{col 29}{space 2} .0961449{col 40}{space 5} 15.45023{col 54}{space 3} 15.82853
+{txt}{hline 16}{c BT}{hline 11}{hline 11}{hline 14}{hline 12}
+
+{com}. 
+. * T-test
+. ttest ln_nights, by(cee)
+
+{txt}Two-sample t test with equal variances
+{hline 9}{c TT}{hline 68}
+   Group{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ Non-CEE {c |}{res}{col 12}    195{col 22} 16.81254{col 34}  .126008{col 46} 1.759606{col 58} 16.56402{col 70} 17.06106
+     {txt}CEE {c |}{res}{col 12}    129{col 22} 15.63938{col 34} .0961449{col 46} 1.091996{col 58} 15.44914{col 70} 15.82962
+{txt}{hline 9}{c +}{hline 68}
+Combined {c |}{res}{col 12}    324{col 22} 16.34545{col 34} .0906598{col 46} 1.631876{col 58} 16.16709{col 70} 16.52381
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 22} 1.173165{col 34} .1735866{col 58} .8316583{col 70} 1.514673
+{txt}{hline 9}{c BT}{hline 68}
+    diff = mean({res}Non-CEE{txt}) - mean({res}CEE{txt})                              t = {res}  6.7584
+{txt}H0: diff = 0                                     Degrees of freedom = {res}     322
+
+    {txt}Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 6. Relationship between GDP and Tourist Arrivals
+. * -----------------------------------------------------------------------------
+. 
+. * Scatter plot
+. scatter arrivals GDP, title("Arrivals vs GDP") ///
+>     ytitle("Tourist Arrivals") xtitle("GDP (million euros)") ///
+>     name(raw_scatter, replace)
+{res}{txt}
+{com}. graph export "scatter_arrivals_gdp.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/scatter_arrivals_gdp.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * Correlation
+. correlate arrivals GDP
+{txt}(obs=281)
+
+             {c |} arrivals      GDP
+{hline 13}{c +}{hline 18}
+    arrivals {c |}{res}   1.0000
+         {txt}GDP {c |}{res}   0.7960   1.0000
+
+{txt}
+{com}. 
+. * Scatter plot log-transformed
+. scatter ln_arrivals ln_GDP, title("Log(Arrivals) vs Log(GDP)") ///
+>     ytitle("Log Tourist Arrivals") xtitle("Log GDP") ///
+>     name(log_scatter, replace)
+{res}{txt}
+{com}. graph export "scatter_ln_arrivals_gdp.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/scatter_ln_arrivals_gdp.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * Correlation log-transformes
+. correlate ln_arrivals ln_GDP
+{txt}(obs=281)
+
+             {c |} ln_arr~s   ln_GDP
+{hline 13}{c +}{hline 18}
+ ln_arrivals {c |}{res}   1.0000
+      {txt}ln_GDP {c |}{res}   0.8434   1.0000
+
+{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 7. Estimate effect of tourist arrivals on GDP (linear and log-log models)
+. * -----------------------------------------------------------------------------
+. 
+. * Linear-linear model
+. regress GDP arrivals
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       281
+{txt}{hline 13}{c +}{hline 34}   F(1, 279)       = {res}   482.53
+{txt}       Model {c |} {res} 9.0336e+13         1  9.0336e+13   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 5.2232e+13       279  1.8721e+11   {txt}R-squared       ={res}    0.6336
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.6323
+{txt}       Total {c |} {res} 1.4257e+14       280  5.0917e+11   {txt}Root MSE        =   {res} 4.3e+05
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}         GDP{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}arrivals {c |}{col 14}{res}{space 2} .0368154{col 26}{space 2}  .001676{col 37}{space 1}   21.97{col 46}{space 3}0.000{col 54}{space 4} .0335163{col 67}{space 3} .0401146
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 29141.97{col 26}{space 2} 31650.31{col 37}{space 1}    0.92{col 46}{space 3}0.358{col 54}{space 4}-33161.76{col 67}{space 3} 91445.71
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. predict gdp_hat_linear if e(sample), xb
+{txt}(503 missing values generated)
+
+{com}. 
+. twoway (scatter GDP arrivals) ///
+>        (line gdp_hat_linear arrivals, sort lcolor(red)), ///
+>        title("Linear Model: GDP vs Arrivals") ///
+>        xtitle("Tourist Arrivals") ytitle("GDP (million euros)") ///
+>        name(linear_plot, replace)
+{res}{txt}
+{com}. graph export "regression_linear.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/regression_linear.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * Log-log model
+. regress ln_GDP ln_arrivals
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       281
+{txt}{hline 13}{c +}{hline 34}   F(1, 279)       = {res}   687.57
+{txt}       Model {c |} {res} 590.670491         1  590.670491   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 239.679646       279  .859066831   {txt}R-squared       ={res}    0.7114
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7103
+{txt}       Total {c |} {res} 830.350137       280   2.9655362   {txt}Root MSE        =   {res} .92686
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      ln_GDP{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}ln_arrivals {c |}{col 14}{res}{space 2} 1.032574{col 26}{space 2} .0393788{col 37}{space 1}   26.22{col 46}{space 3}0.000{col 54}{space 4}  .955057{col 67}{space 3} 1.110091
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-4.087591{col 26}{space 2} .6054892{col 37}{space 1}   -6.75{col 46}{space 3}0.000{col 54}{space 4}-5.279498{col 67}{space 3}-2.895683
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. predict ln_gdp_hat if e(sample), xb
+{txt}(503 missing values generated)
+
+{com}. 
+. twoway (scatter ln_GDP ln_arrivals) ///
+>        (line ln_gdp_hat ln_arrivals, sort lcolor(red)), ///
+>        title("Log-Log Model: ln(GDP) vs ln(Arrivals)") ///
+>        xtitle("Log Tourist Arrivals") ytitle("Log GDP") ///
+>        name(log_plot, replace)
+{res}{txt}
+{com}. graph export "regression_loglog.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/regression_loglog.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * Combine both regressions
+. graph combine linear_plot log_plot, col(2)
+{res}{txt}
+{com}. graph export "regression_models_side_by_side.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/regression_models_side_by_side.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 8. Test for Nonlinear Effect: Add Quadratic Form of Arrivals
+. * -----------------------------------------------------------------------------
+. 
+. * Generate quadratic
+. capture drop arrivals_sq
+{txt}
+{com}. gen arrivals_sq = arrivals^2
+{txt}(468 missing values generated)
+
+{com}. label variable arrivals_sq "Squared Tourist Arrivals"
+{txt}
+{com}. 
+. * Run quadratic regression
+. regress GDP arrivals arrivals_sq
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       281
+{txt}{hline 13}{c +}{hline 34}   F(2, 278)       = {res}   294.65
+{txt}       Model {c |} {res} 9.6870e+13         2  4.8435e+13   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 4.5698e+13       278  1.6438e+11   {txt}R-squared       ={res}    0.6795
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.6772
+{txt}       Total {c |} {res} 1.4257e+14       280  5.0917e+11   {txt}Root MSE        =   {res} 4.1e+05
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}         GDP{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}arrivals {c |}{col 14}{res}{space 2} .0704329{col 26}{space 2} .0055586{col 37}{space 1}   12.67{col 46}{space 3}0.000{col 54}{space 4} .0594907{col 67}{space 3} .0813751
+{txt}{space 1}arrivals_sq {c |}{col 14}{res}{space 2}-6.53e-10{col 26}{space 2} 1.04e-10{col 37}{space 1}   -6.30{col 46}{space 3}0.000{col 54}{space 4}-8.57e-10{col 67}{space 3}-4.49e-10
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-105390.2{col 26}{space 2} 36536.34{col 37}{space 1}   -2.88{col 46}{space 3}0.004{col 54}{space 4}-177313.2{col 67}{space 3}-33467.17
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. predict gdp_hat_quad if e(sample), xb
+{txt}(503 missing values generated)
+
+{com}. 
+. twoway (scatter GDP arrivals) ///
+>        (line gdp_hat_quad arrivals, sort lcolor(red)), ///
+>        title("Quadratic Model: GDP vs Arrivals²") ///
+>        xtitle("Tourist Arrivals") ///
+>        ytitle("GDP (million euros)") ///
+>        name(quad_plot, replace)
+{res}{txt}
+{com}. 
+. graph export "regression_quadratic.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/regression_quadratic.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * =============================================================================
+. * SECTION 2: The Regression Model – Determinants of Tourism Demand
+. * =============================================================================
+. 
+. * -----------------------------------------------------------------------------
+. * 1. Estimate full log-log model for tourism demand
+. * -----------------------------------------------------------------------------
+. 
+. * Multiple linear regression: log-log specification
+. reg ln_nights ln_GDP ln_pop ln_airports ln_offer ln_exp_culture ln_env ln_homicide ln_rape
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       147
+{txt}{hline 13}{c +}{hline 34}   F(8, 138)       = {res}    59.07
+{txt}       Model {c |} {res} 206.854168         8   25.856771   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 60.4032781       138  .437704914   {txt}R-squared       ={res}    0.7740
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7609
+{txt}       Total {c |} {res} 267.257446       146  1.83053045   {txt}Root MSE        =   {res} .66159
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   ln_nights{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}ln_GDP {c |}{col 14}{res}{space 2}-.1168629{col 26}{space 2} .1706752{col 37}{space 1}   -0.68{col 46}{space 3}0.495{col 54}{space 4}-.4543396{col 67}{space 3} .2206139
+{txt}{space 6}ln_pop {c |}{col 14}{res}{space 2}  .058877{col 26}{space 2} .1828681{col 37}{space 1}    0.32{col 46}{space 3}0.748{col 54}{space 4}-.3027087{col 67}{space 3} .4204626
+{txt}{space 1}ln_airports {c |}{col 14}{res}{space 2}  .182808{col 26}{space 2}  .091759{col 37}{space 1}    1.99{col 46}{space 3}0.048{col 54}{space 4} .0013726{col 67}{space 3} .3642434
+{txt}{space 4}ln_offer {c |}{col 14}{res}{space 2} .5428793{col 26}{space 2} .0602877{col 37}{space 1}    9.00{col 46}{space 3}0.000{col 54}{space 4} .4236722{col 67}{space 3} .6620864
+{txt}ln_exp_cul~e {c |}{col 14}{res}{space 2}  .041651{col 26}{space 2} .1960609{col 37}{space 1}    0.21{col 46}{space 3}0.832{col 54}{space 4}-.3460209{col 67}{space 3} .4293228
+{txt}{space 6}ln_env {c |}{col 14}{res}{space 2} .0608486{col 26}{space 2} .1338301{col 37}{space 1}    0.45{col 46}{space 3}0.650{col 54}{space 4}-.2037741{col 67}{space 3} .3254713
+{txt}{space 1}ln_homicide {c |}{col 14}{res}{space 2}-.3791946{col 26}{space 2}  .117535{col 37}{space 1}   -3.23{col 46}{space 3}0.002{col 54}{space 4} -.611597{col 67}{space 3}-.1467923
+{txt}{space 5}ln_rape {c |}{col 14}{res}{space 2}-.0334804{col 26}{space 2} .1045264{col 37}{space 1}   -0.32{col 46}{space 3}0.749{col 54}{space 4}-.2401607{col 67}{space 3}    .1732
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 11.58931{col 26}{space 2} 1.389146{col 37}{space 1}    8.34{col 46}{space 3}0.000{col 54}{space 4} 8.842545{col 67}{space 3} 14.33607
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. capture drop ln_nights_hat
+{txt}
+{com}. predict ln_nights_hat if e(sample), xb
+{txt}(637 missing values generated)
+
+{com}. label variable ln_nights_hat "Fitted Values: ln(Nights)"
+{txt}
+{com}. 
+. estimates store model1
+{txt}
+{com}. 
+. vif
+
+{txt}    Variable {c |}       VIF       1/VIF  
+{hline 13}{c +}{hline 22}
+{space 6}ln_GDP {c |} {res}    22.57    0.044309
+{txt}{space 6}ln_pop {c |} {res}    20.91    0.047823
+{txt}{space 6}ln_env {c |} {res}    12.88    0.077611
+{txt}{space 1}ln_airports {c |} {res}     5.33    0.187592
+{txt}{space 5}ln_rape {c |} {res}     4.13    0.242029
+{txt}{space 4}ln_offer {c |} {res}     3.48    0.287451
+{txt}{space 1}ln_homicide {c |} {res}     1.65    0.607685
+{txt}ln_exp_cul~e {c |} {res}     1.29    0.772204
+{txt}{hline 13}{c +}{hline 22}
+    Mean VIF {c |} {res}     9.03
+{txt}
+{com}. 
+. * To investigate the determinants of tourism demand across European countries, we estimated a multiple linear regression model in log-log form using the dependent variable ln_nights, which captures the logarithm of total nights spent at tourist accommodation establishments. The explanatory variables include macroeconomic indicators (ln_GDP, ln_pop), tourism infrastructure (ln_airports, ln_offer), government and environmental factors (ln_exp_culture, ln_env), and public safety indicators (ln_homicide, ln_rape).
+. 
+. * The model demonstrates a strong overall fit with an R-squared of 0.774, indicating that approximately 77% of the variation in tourism demand is explained by the included variables. Among the predictors, ln_offer (availability of accommodations), ln_airports (accessibility), and ln_homicide (safety concerns) emerged as statistically significant. In contrast, variables such as ln_GDP, ln_pop, ln_exp_culture, ln_env, and ln_rape were not statistically significant.
+. 
+. * Additionally, a multicollinearity check using Variance Inflation Factors (VIFs) revealed particularly high values for ln_GDP (22.57) and ln_pop (20.91), suggesting these variables may distort estimates due to strong linear dependencies with other regressors. Based on these results, the next step involves refining the model by removing or transforming highly collinear and non-significant variables to improve model robustness and interpretability.
+. 
+. * Drop ln_GDP and ln_pop due to multicollinearity.
+. * Remove ln_exp_culture, ln_env, and ln_rape, since they are statistically insignificant and have weak contribution.
+. 
+. 
+. * -----------------------------------------------------------------------------
+. * 2. Estimate refined log-log model
+. * -----------------------------------------------------------------------------
+. 
+. * Run reduced regression which refined model based on significant variables
+. reg ln_nights ln_airports ln_offer ln_homicide
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       194
+{txt}{hline 13}{c +}{hline 34}   F(3, 190)       = {res}   208.82
+{txt}       Model {c |} {res} 276.738459         3  92.2461529   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 83.9305252       190  .441739606   {txt}R-squared       ={res}    0.7673
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7636
+{txt}       Total {c |} {res} 360.668984       193  1.86875121   {txt}Root MSE        =   {res} .66463
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   ln_nights{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}ln_airports {c |}{col 14}{res}{space 2} .0657089{col 26}{space 2} .0490002{col 37}{space 1}    1.34{col 46}{space 3}0.182{col 54}{space 4}-.0309454{col 67}{space 3} .1623633
+{txt}{space 4}ln_offer {c |}{col 14}{res}{space 2} .6118728{col 26}{space 2} .0382545{col 37}{space 1}   15.99{col 46}{space 3}0.000{col 54}{space 4} .5364147{col 67}{space 3} .6873308
+{txt}{space 1}ln_homicide {c |}{col 14}{res}{space 2}-.2612741{col 26}{space 2} .0805884{col 37}{space 1}   -3.24{col 46}{space 3}0.001{col 54}{space 4}-.4202369{col 67}{space 3}-.1023113
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 11.36295{col 26}{space 2} .2760165{col 37}{space 1}   41.17{col 46}{space 3}0.000{col 54}{space 4}  10.8185{col 67}{space 3}  11.9074
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. capture drop ln_nights_hat_refined
+{txt}
+{com}. predict ln_nights_hat_refined if e(sample), xb
+{txt}(590 missing values generated)
+
+{com}. label variable ln_nights_hat_refined "Fitted Values (Refined)"
+{txt}
+{com}. 
+. estimates store model2
+{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 3. Export regression comparison table
+. * -----------------------------------------------------------------------------
+. 
+. * Make sure about outreg2 is installed
+. cap which outreg2
+{txt}
+{com}. if _rc {c -(}
+.     ssc install outreg2, replace
+. {c )-}
+{txt}
+{com}. 
+. * Export both models side by side to Word file
+. outreg2 [model1 model2] using "regression_models.doc", replace ///
+>     ctitle("Full Model" "Reduced Model") ///
+>     dec(3) se addstat(R-squared, e(r2))
+{txt}{stata `"shellout using `"regression_models.doc"'"':regression_models.doc}
+{browse `"/Users/samin/Desktop/stata"' :dir}{com} : {txt}{stata `"seeout using "regression_models.txt""':seeout}
+
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 4. Mean comparison of ln_offer between CEE and Non-CEE countries
+. * -----------------------------------------------------------------------------
+. 
+. * 1. Descriptive stats by group
+. mean ln_offer, over(cee)
+{res}
+{txt}{col 1}Mean estimation{col 46}{lalign 13:Number of obs}{col 59} = {res}{ralign 3:293}
+
+{txt}{hline 15}{c TT}{hline 11}{hline 11}{hline 14}{hline 12}
+{col 16}{c |}       Mean{col 28}   Std. err.{col 40}     [95% con{col 53}f. interval]
+{hline 15}{c +}{hline 11}{hline 11}{hline 14}{hline 12}
+c.ln_offer@cee {c |}
+{space 6}Non-CEE  {c |}{col 16}{res}{space 2} 8.528365{col 28}{space 2} .1538962{col 39}{space 5} 8.225479{col 53}{space 3} 8.831251
+{txt}{space 10}CEE  {c |}{col 16}{res}{space 2}  7.91941{col 28}{space 2} .1227868{col 39}{space 5} 7.677751{col 53}{space 3} 8.161069
+{txt}{hline 15}{c BT}{hline 11}{hline 11}{hline 14}{hline 12}
+
+{com}. 
+. * 2. Two-sample t-test
+. ttest ln_offer, by(cee)
+
+{txt}Two-sample t test with equal variances
+{hline 9}{c TT}{hline 68}
+   Group{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. err.{col 47}Std. dev.{col 59}[95% conf. interval]
+{hline 9}{c +}{hline 68}
+ Non-CEE {c |}{res}{col 12}    177{col 22} 8.528365{col 34} .1538962{col 46} 2.047456{col 58} 8.224646{col 70} 8.832085
+     {txt}CEE {c |}{res}{col 12}    116{col 22}  7.91941{col 34} .1227868{col 46} 1.322454{col 58} 7.676193{col 70} 8.162627
+{txt}{hline 9}{c +}{hline 68}
+Combined {c |}{res}{col 12}    293{col 22} 8.287277{col 34} .1061986{col 46} 1.817827{col 58} 8.078265{col 70} 8.496289
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 22} .6089552{col 34} .2145792{col 58} .1866313{col 70} 1.031279
+{txt}{hline 9}{c BT}{hline 68}
+    diff = mean({res}Non-CEE{txt}) - mean({res}CEE{txt})                              t = {res}  2.8379
+{txt}H0: diff = 0                                     Degrees of freedom = {res}     291
+
+    {txt}Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = {res}0.9976         {txt}Pr(|T| > |t|) = {res}0.0049          {txt}Pr(T > t) = {res}0.0024
+{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 5. Inspect correlation matrix with ln_nights
+. * -----------------------------------------------------------------------------
+. pwcorr ln_nights ln_GDP ln_pop ln_airports ln_offer ln_env ln_homicide, sig
+
+             {txt}{c |} ln_nig~s   ln_GDP   ln_pop ln_air~s ln_offer   ln_env ln_hom~e
+{hline 13}{c +}{hline 63}
+   ln_nights {c |} {res}  1.0000 
+             {txt}{c |}
+             {c |}
+      ln_GDP {c |} {res}  0.7576   1.0000 
+             {txt}{c |}{res}   0.0000
+             {txt}{c |}
+      ln_pop {c |} {res}  0.7838   0.8734   1.0000 
+             {txt}{c |}{res}   0.0000   0.0000
+             {txt}{c |}
+ ln_airports {c |} {res}  0.6180   0.7815   0.7448   1.0000 
+             {txt}{c |}{res}   0.0000   0.0000   0.0000
+             {txt}{c |}
+    ln_offer {c |} {res}  0.8668   0.8103   0.8483   0.6908   1.0000 
+             {txt}{c |}{res}   0.0000   0.0000   0.0000   0.0000
+             {txt}{c |}
+      ln_env {c |} {res}  0.7916   0.8724   0.9469   0.6879   0.8357   1.0000 
+             {txt}{c |}{res}   0.0000   0.0000   0.0000   0.0000   0.0000
+             {txt}{c |}
+ ln_homicide {c |} {res} -0.3851  -0.4466  -0.2200  -0.1928  -0.3554  -0.2353   1.0000 
+             {txt}{c |}{res}   0.0000   0.0000   0.0002   0.0020   0.0000   0.0002
+             {txt}{c |}
+
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 6. Plot scatter graphs to visually explore relationships
+. * -----------------------------------------------------------------------------
+. scatter ln_nights ln_offer, title("ln(Nights) vs ln(Offer)")
+{res}{txt}
+{com}. graph export "scatter_ln_nights_offer.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/scatter_ln_nights_offer.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. scatter ln_nights ln_airports, title("ln(Nights) vs ln(Airports)")
+{res}{txt}
+{com}. graph export "scatter_ln_nights_airports.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/scatter_ln_nights_airports.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. scatter ln_nights ln_GDP, title("ln(Nights) vs ln(GDP)")
+{res}{txt}
+{com}. graph export "scatter_ln_nights_GDP.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/scatter_ln_nights_GDP.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 7. Estimate log-log linear regression model
+. * -----------------------------------------------------------------------------
+. reg ln_nights ln_offer ln_airports ln_GDP ln_homicide
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       194
+{txt}{hline 13}{c +}{hline 34}   F(4, 189)       = {res}   156.43
+{txt}       Model {c |} {res} 277.002131         4  69.2505327   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 83.6668533       189  .442681763   {txt}R-squared       ={res}    0.7680
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7631
+{txt}       Total {c |} {res} 360.668984       193  1.86875121   {txt}Root MSE        =   {res} .66534
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   ln_nights{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}ln_offer {c |}{col 14}{res}{space 2} .5964302{col 26}{space 2} .0432077{col 37}{space 1}   13.80{col 46}{space 3}0.000{col 54}{space 4}  .511199{col 67}{space 3} .6816614
+{txt}{space 1}ln_airports {c |}{col 14}{res}{space 2} .0374141{col 26}{space 2} .0612395{col 37}{space 1}    0.61{col 46}{space 3}0.542{col 54}{space 4}-.0833866{col 67}{space 3} .1582148
+{txt}{space 6}ln_GDP {c |}{col 14}{res}{space 2} .0441221{col 26}{space 2} .0571702{col 37}{space 1}    0.77{col 46}{space 3}0.441{col 54}{space 4}-.0686516{col 67}{space 3} .1568957
+{txt}{space 1}ln_homicide {c |}{col 14}{res}{space 2}-.2449704{col 26}{space 2} .0833943{col 37}{space 1}   -2.94{col 46}{space 3}0.004{col 54}{space 4}-.4094736{col 67}{space 3}-.0804673
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 11.02577{col 26}{space 2} .5169369{col 37}{space 1}   21.33{col 46}{space 3}0.000{col 54}{space 4} 10.00607{col 67}{space 3} 12.04548
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. capture drop ln_nights_hat_main
+{txt}
+{com}. predict ln_nights_hat_main if e(sample), xb
+{txt}(590 missing values generated)
+
+{com}. label variable ln_nights_hat_main "Fitted Values - Main Model"
+{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 8. Plot actual vs fitted values
+. * -----------------------------------------------------------------------------
+. twoway (scatter ln_nights ln_nights_hat_main, msymbol(circle) mcolor(blue)) ///
+>        (line ln_nights_hat_main ln_nights_hat_main, sort lcolor(red)), ///
+>        title("Fitted vs Actual: ln(Nights)") ///
+>        xtitle("Fitted ln(Nights)") ytitle("Actual ln(Nights)")
+{res}{txt}
+{com}. graph export "fitted_vs_actual_ln_nights.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/fitted_vs_actual_ln_nights.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 9. Check for residuals and assumptions
+. * -----------------------------------------------------------------------------
+. 
+. * Residual plot
+. predict resid_main, residuals
+{txt}(590 missing values generated)
+
+{com}. rvfplot, yline(0) title("Residual vs Fitted")
+{res}{txt}
+{com}. graph export "residuals_plot_ln_nights.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/residuals_plot_ln_nights.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * Normality of residuals
+. histogram resid_main, normal title("Histogram of Residuals")
+{txt}(bin={res}13{txt}, start={res}-1.1779408{txt}, width={res}.21765195{txt})
+{res}{txt}
+{com}. graph export "resid_histogram.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/resid_histogram.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. kdensity resid_main, normal title("Density of Residuals")
+{res}{txt}
+{com}. graph export "resid_density.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/resid_density.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. * Multicollinearity check
+. vif
+
+{txt}    Variable {c |}       VIF       1/VIF  
+{hline 13}{c +}{hline 22}
+{space 6}ln_GDP {c |} {res}     3.96    0.252490
+{txt}{space 1}ln_airports {c |} {res}     2.92    0.342082
+{txt}{space 4}ln_offer {c |} {res}     2.50    0.400592
+{txt}{space 1}ln_homicide {c |} {res}     1.20    0.833936
+{txt}{hline 13}{c +}{hline 22}
+    Mean VIF {c |} {res}     2.64
+{txt}
+{com}. 
+. estimates store main_model
+{txt}
+{com}. 
+. 
+. * -----------------------------------------------------------------------------
+. * 10. Drop one covariate: ln_GDP
+. * -----------------------------------------------------------------------------
+. 
+. * Re-run the regression without ln_GDP
+. reg ln_nights ln_offer ln_airports ln_homicide
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       194
+{txt}{hline 13}{c +}{hline 34}   F(3, 190)       = {res}   208.82
+{txt}       Model {c |} {res} 276.738459         3  92.2461529   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 83.9305252       190  .441739606   {txt}R-squared       ={res}    0.7673
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7636
+{txt}       Total {c |} {res} 360.668984       193  1.86875121   {txt}Root MSE        =   {res} .66463
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   ln_nights{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}ln_offer {c |}{col 14}{res}{space 2} .6118728{col 26}{space 2} .0382545{col 37}{space 1}   15.99{col 46}{space 3}0.000{col 54}{space 4} .5364147{col 67}{space 3} .6873308
+{txt}{space 1}ln_airports {c |}{col 14}{res}{space 2} .0657089{col 26}{space 2} .0490002{col 37}{space 1}    1.34{col 46}{space 3}0.182{col 54}{space 4}-.0309454{col 67}{space 3} .1623633
+{txt}{space 1}ln_homicide {c |}{col 14}{res}{space 2}-.2612741{col 26}{space 2} .0805884{col 37}{space 1}   -3.24{col 46}{space 3}0.001{col 54}{space 4}-.4202369{col 67}{space 3}-.1023113
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 11.36295{col 26}{space 2} .2760165{col 37}{space 1}   41.17{col 46}{space 3}0.000{col 54}{space 4}  10.8185{col 67}{space 3}  11.9074
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. estimates store model_nogdp
+{txt}
+{com}. 
+. * Predict fitted values
+. capture drop ln_nights_hat_nogdp
+{txt}
+{com}. predict ln_nights_hat_nogdp if e(sample), xb
+{txt}(590 missing values generated)
+
+{com}. label variable ln_nights_hat_nogdp "Fitted Values (No ln_GDP)"
+{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 11. Compare both models: with and without ln_GDP
+. * -----------------------------------------------------------------------------
+. 
+. * Basic comparison table
+. estimates table main_model model_nogdp, b se stats(r2 N)
+{res}
+{txt}{hline 12}{c -}{c TT}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{ralign 12:Variable} {c |} {center 10:main_model} {space 1} {center 10:model_no~p} {space 1}
+{hline 12}{c -}{c +}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{res}{txt}{space 4}ln_offer {c |}{res} {ralign 10:.5964302}{txt} {space 1}{res} {ralign 10:.61187277}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.04320766}{txt} {space 1}{res} {ralign 10:.03825448}{txt} {space 1}
+{res}{txt}{space 1}ln_airports {c |}{res} {ralign 10:.03741412}{txt} {space 1}{res} {ralign 10:.06570892}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.06123948}{txt} {space 1}{res} {ralign 10:.04900024}{txt} {space 1}
+{res}{txt}{space 6}ln_GDP {c |}{res} {ralign 10:.04412207}{txt} {space 1}{res} {ralign 10:}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.05717021}{txt} {space 1}{res} {ralign 10:}{txt} {space 1}
+{res}{txt}{space 1}ln_homicide {c |}{res} {ralign 10:-.24497043}{txt} {space 1}{res} {ralign 10:-.26127409}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.08339428}{txt} {space 1}{res} {ralign 10:.08058836}{txt} {space 1}
+{res}{txt}{space 7}_cons {c |}{res} {ralign 10:11.025773}{txt} {space 1}{res} {ralign 10:11.362953}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.51693691}{txt} {space 1}{res} {ralign 10:.27601647}{txt} {space 1}
+{res}{txt}{hline 12}{c -}{c +}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{ralign 12:r2} {c |}{res} {ralign 10:.76802315}{txt} {space 1}{res} {ralign 10:.76729209}{txt} {space 1}
+{res}{txt}{ralign 12:N} {c |}{res} {ralign 10:194}{txt} {space 1}{res} {ralign 10:194}{txt} {space 1}
+{res}{txt}{hline 12}{c -}{c BT}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{ralign 40:Legend: b/se}
+{res}{txt}
+{com}. 
+. * -----------------------------------------------------------------------------
+. * 12. Drop ln_offer and re-estimate the model
+. * -----------------------------------------------------------------------------
+. 
+. * Run regression without ln_offer
+. reg ln_nights ln_airports ln_GDP ln_homicide
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       198
+{txt}{hline 13}{c +}{hline 34}   F(3, 194)       = {res}    73.39
+{txt}       Model {c |} {res} 196.022253         3  65.3407509   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 172.721501       194  .890317016   {txt}R-squared       ={res}    0.5316
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.5244
+{txt}       Total {c |} {res} 368.743754       197  1.87179571   {txt}Root MSE        =   {res} .94357
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   ln_nights{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}ln_airports {c |}{col 14}{res}{space 2} .1873857{col 26}{space 2} .0826074{col 37}{space 1}    2.27{col 46}{space 3}0.024{col 54}{space 4} .0244617{col 67}{space 3} .3503096
+{txt}{space 6}ln_GDP {c |}{col 14}{res}{space 2} .4167639{col 26}{space 2} .0685722{col 37}{space 1}    6.08{col 46}{space 3}0.000{col 54}{space 4} .2815211{col 67}{space 3} .5520067
+{txt}{space 1}ln_homicide {c |}{col 14}{res}{space 2}-.2981057{col 26}{space 2} .1166505{col 37}{space 1}   -2.56{col 46}{space 3}0.011{col 54}{space 4}-.5281718{col 67}{space 3}-.0680397
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 11.34158{col 26}{space 2} .6974472{col 37}{space 1}   16.26{col 46}{space 3}0.000{col 54}{space 4} 9.966026{col 67}{space 3} 12.71713
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. estimates store model_nooffer
+{txt}
+{com}. 
+. * Predict fitted values
+. capture drop ln_nights_hat_nooffer
+{txt}
+{com}. predict ln_nights_hat_nooffer if e(sample), xb
+{txt}(586 missing values generated)
+
+{com}. label variable ln_nights_hat_nooffer "Fitted Values (No ln_offer)"
+{txt}
+{com}. 
+. * Compare all three models: full model, no GDP, no offer
+. estimates table main_model model_nogdp model_nooffer, b se stats(r2 N)
+{res}
+{txt}{hline 12}{c -}{c TT}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{ralign 12:Variable} {c |} {center 10:main_model} {space 1} {center 10:model_no~p} {space 1} {center 10:model_no~r} {space 1}
+{hline 12}{c -}{c +}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{res}{txt}{space 4}ln_offer {c |}{res} {ralign 10:.5964302}{txt} {space 1}{res} {ralign 10:.61187277}{txt} {space 1}{res} {ralign 10:}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.04320766}{txt} {space 1}{res} {ralign 10:.03825448}{txt} {space 1}{res} {ralign 10:}{txt} {space 1}
+{res}{txt}{space 1}ln_airports {c |}{res} {ralign 10:.03741412}{txt} {space 1}{res} {ralign 10:.06570892}{txt} {space 1}{res} {ralign 10:.18738566}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.06123948}{txt} {space 1}{res} {ralign 10:.04900024}{txt} {space 1}{res} {ralign 10:.08260743}{txt} {space 1}
+{res}{txt}{space 6}ln_GDP {c |}{res} {ralign 10:.04412207}{txt} {space 1}{res} {ralign 10:}{txt} {space 1}{res} {ralign 10:.41676389}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.05717021}{txt} {space 1}{res} {ralign 10:}{txt} {space 1}{res} {ralign 10:.06857222}{txt} {space 1}
+{res}{txt}{space 1}ln_homicide {c |}{res} {ralign 10:-.24497043}{txt} {space 1}{res} {ralign 10:-.26127409}{txt} {space 1}{res} {ralign 10:-.29810574}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.08339428}{txt} {space 1}{res} {ralign 10:.08058836}{txt} {space 1}{res} {ralign 10:.11665051}{txt} {space 1}
+{res}{txt}{space 7}_cons {c |}{res} {ralign 10:11.025773}{txt} {space 1}{res} {ralign 10:11.362953}{txt} {space 1}{res} {ralign 10:11.341578}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.51693691}{txt} {space 1}{res} {ralign 10:.27601647}{txt} {space 1}{res} {ralign 10:.69744718}{txt} {space 1}
+{res}{txt}{hline 12}{c -}{c +}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{ralign 12:r2} {c |}{res} {ralign 10:.76802315}{txt} {space 1}{res} {ralign 10:.76729209}{txt} {space 1}{res} {ralign 10:.53159477}{txt} {space 1}
+{res}{txt}{ralign 12:N} {c |}{res} {ralign 10:194}{txt} {space 1}{res} {ralign 10:194}{txt} {space 1}{res} {ralign 10:198}{txt} {space 1}
+{res}{txt}{hline 12}{c -}{c BT}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{ralign 53:Legend: b/se}
+{res}{txt}
+{com}. 
+. * =============================================================================
+. * 13. Subsample Regression: CEE Countries Only
+. * =============================================================================
+. 
+. * Run the same main regression using only CEE countries
+. reg ln_nights ln_offer ln_airports ln_GDP ln_homicide if cee == 1
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}        79
+{txt}{hline 13}{c +}{hline 34}   F(4, 74)        = {res}    61.91
+{txt}       Model {c |} {res} 54.3225227         4  13.5806307   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 16.2323359        74  .219355891   {txt}R-squared       ={res}    0.7699
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7575
+{txt}       Total {c |} {res} 70.5548586        78  .904549469   {txt}Root MSE        =   {res} .46835
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}   ln_nights{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}ln_offer {c |}{col 14}{res}{space 2} .5546136{col 26}{space 2} .0632136{col 37}{space 1}    8.77{col 46}{space 3}0.000{col 54}{space 4} .4286578{col 67}{space 3} .6805693
+{txt}{space 1}ln_airports {c |}{col 14}{res}{space 2} .2339509{col 26}{space 2} .1105944{col 37}{space 1}    2.12{col 46}{space 3}0.038{col 54}{space 4} .0135868{col 67}{space 3} .4543151
+{txt}{space 6}ln_GDP {c |}{col 14}{res}{space 2}-.2814307{col 26}{space 2} .0828133{col 37}{space 1}   -3.40{col 46}{space 3}0.001{col 54}{space 4}-.4464397{col 67}{space 3}-.1164217
+{txt}{space 1}ln_homicide {c |}{col 14}{res}{space 2}-.4415526{col 26}{space 2}  .107529{col 37}{space 1}   -4.11{col 46}{space 3}0.000{col 54}{space 4}-.6558088{col 67}{space 3}-.2272964
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 14.45477{col 26}{space 2} .9750916{col 37}{space 1}   14.82{col 46}{space 3}0.000{col 54}{space 4} 12.51186{col 67}{space 3} 16.39768
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. estimates store cee_model
+{txt}
+{com}. 
+. * Predict fitted values
+. capture drop ln_nights_hat_cee
+{txt}
+{com}. predict ln_nights_hat_cee if e(sample), xb
+{txt}(705 missing values generated)
+
+{com}. label variable ln_nights_hat_cee "Fitted Values - CEE Only"
+{txt}
+{com}. 
+. * =============================================================================
+. * 14. Compare Full Sample vs CEE Sample
+. * =============================================================================
+. 
+. * Compare main model and CEE-only model
+. estimates table main_model cee_model, b se stats(r2 N)
+{res}
+{txt}{hline 12}{c -}{c TT}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{ralign 12:Variable} {c |} {center 10:main_model} {space 1} {center 10:cee_model} {space 1}
+{hline 12}{c -}{c +}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{res}{txt}{space 4}ln_offer {c |}{res} {ralign 10:.5964302}{txt} {space 1}{res} {ralign 10:.55461358}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.04320766}{txt} {space 1}{res} {ralign 10:.06321355}{txt} {space 1}
+{res}{txt}{space 1}ln_airports {c |}{res} {ralign 10:.03741412}{txt} {space 1}{res} {ralign 10:.23395094}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.06123948}{txt} {space 1}{res} {ralign 10:.1105944}{txt} {space 1}
+{res}{txt}{space 6}ln_GDP {c |}{res} {ralign 10:.04412207}{txt} {space 1}{res} {ralign 10:-.28143069}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.05717021}{txt} {space 1}{res} {ralign 10:.08281327}{txt} {space 1}
+{res}{txt}{space 1}ln_homicide {c |}{res} {ralign 10:-.24497043}{txt} {space 1}{res} {ralign 10:-.44155262}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.08339428}{txt} {space 1}{res} {ralign 10:.10752899}{txt} {space 1}
+{res}{txt}{space 7}_cons {c |}{res} {ralign 10:11.025773}{txt} {space 1}{res} {ralign 10:14.45477}{txt} {space 1}
+{res}{txt}{space 12} {c |}{res} {ralign 10:.51693691}{txt} {space 1}{res} {ralign 10:.97509156}{txt} {space 1}
+{res}{txt}{hline 12}{c -}{c +}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{ralign 12:r2} {c |}{res} {ralign 10:.76802315}{txt} {space 1}{res} {ralign 10:.76993312}{txt} {space 1}
+{res}{txt}{ralign 12:N} {c |}{res} {ralign 10:194}{txt} {space 1}{res} {ralign 10:79}{txt} {space 1}
+{res}{txt}{hline 12}{c -}{c BT}{c -}{hline 10}{c -}{c -}{c -}{hline 10}{c -}{c -}
+{ralign 40:Legend: b/se}
+{res}{txt}
+{com}. 
+. * Predict fitted values again if needed
+. capture drop ln_nights_hat_cee
+{txt}
+{com}. predict ln_nights_hat_cee if e(sample), xb
+{txt}(705 missing values generated)
+
+{com}. label variable ln_nights_hat_cee "Fitted Values - CEE Only"
+{txt}
+{com}. 
+. * Plot actual vs predicted for CEE
+. twoway (scatter ln_nights ln_nights_hat_cee if cee == 1, ///
+>         msymbol(circle) mcolor(blue)) ///
+>        (line ln_nights_hat_cee ln_nights_hat_cee if cee == 1, ///
+>         sort lcolor(red)), ///
+>        title("CEE Countries: Actual vs Fitted ln(Nights)") ///
+>        xtitle("Fitted ln(Nights)") ytitle("Actual ln(Nights)")
+{res}{txt}
+{com}. 
+. graph export "scatter_fitted_actual_cee.png", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/samin/Desktop/stata/scatter_fitted_actual_cee.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+{com}. 
+. 
+. * -----------------------------------------------------------------------------
+. * End log
+. * -----------------------------------------------------------------------------
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/samin/Desktop/stata/section1_output.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 2 Apr 2025, 08:15:30
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
